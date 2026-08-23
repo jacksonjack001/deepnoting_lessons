@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>本周 AI 进展周报 · 2026.08.17 - 08.23</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" crossorigin="anonymous">
+<style>
+  :root {
+    --r-background-color: #070a1a;
+    --r-main-font: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --r-heading-font: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    --r-main-color: #e8ecff;
+    --r-heading-color: #ffffff;
+    --r-link-color: #7bd3ff;
+    --cyan: #5ee2ff;
+    --pink: #ff6ad5;
+    --gold: #ffd86b;
+    --green: #7dffb3;
+    --orange: #ffa86b;
+    --purple: #c4a5ff;
+  }
+  html, body { background: #070a1a; }
+  .reveal { font-size: 26px; }
+  .reveal h1, .reveal h2, .reveal h3 { letter-spacing: 0.5px; }
+  .reveal h1 { font-size: 2.6em; font-weight: 900; }
+  .reveal h2 { font-size: 1.7em; font-weight: 800; color: #fff; }
+  .reveal h3 { color: var(--cyan); font-weight: 700; }
+  .reveal section { text-align: left; }
+  .reveal ul { line-height: 1.45; }
+  .reveal li { margin-bottom: 8px; }
+  .reveal p { line-height: 1.55; }
+  .reveal strong { color: var(--gold); font-weight: 700; }
+  .reveal em { color: var(--pink); font-style: normal; font-weight: 600; }
+  .reveal a { color: #7bd3ff; text-decoration: none; border-bottom: 1px dashed rgba(123,211,255,0.4); }
+  .reveal a:hover { color: var(--gold); }
+  .reveal code { background: rgba(94,226,255,0.12); color: var(--cyan); padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
+
+  /* cover */
+  .cover { text-align: center !important; }
+  .cover .eyebrow { display: inline-block; padding: 6px 16px; border: 1px solid rgba(94,226,255,0.5); border-radius: 999px; color: var(--cyan); font-size: 0.7em; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  .cover h1 { background: linear-gradient(120deg, #5ee2ff 0%, #c4a5ff 50%, #ff6ad5 100%); -webkit-background-clip: text; background-clip: text; color: transparent; margin: 0; line-height: 1.1; }
+  .cover .date { font-size: 1.4em; color: #fff; margin-top: 16px; font-weight: 300; }
+  .cover .meta { margin-top: 40px; font-size: 0.75em; color: #7a86b8; }
+  .cover .keywords { margin-top: 24px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .keyword { display: inline-block; padding: 6px 14px; border-radius: 8px; font-size: 0.8em; font-weight: 600; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+
+  /* grid helpers */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-23 { display: grid; grid-template-columns: 2fr 3fr; gap: 28px; align-items: start; }
+  .grid-32 { display: grid; grid-template-columns: 3fr 2fr; gap: 28px; align-items: start; }
+
+  /* cards */
+  .card {
+    background: linear-gradient(135deg, rgba(94,226,255,0.04) 0%, rgba(196,165,255,0.04) 100%);
+    border: 1px solid rgba(94,226,255,0.18);
+    border-radius: 12px;
+    padding: 16px 20px;
+    backdrop-filter: blur(8px);
+  }
+  .card h4 { margin: 0 0 8px 0; font-size: 1em; color: #fff; }
+  .card .sub { font-size: 0.82em; color: #bcc4ec; line-height: 1.5; }
+  .big { font-size: 2.2em; font-weight: 900; color: var(--gold); line-height: 1; }
+  .big-cyan { font-size: 2.2em; font-weight: 900; color: var(--cyan); line-height: 1; }
+  .big-pink { font-size: 2.2em; font-weight: 900; color: var(--pink); line-height: 1; }
+  .big-green { font-size: 2.2em; font-weight: 900; color: var(--green); line-height: 1; }
+
+  /* brand label */
+  .brand { display: inline-flex; align-items: center; gap: 8px; font-size: 0.7em; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px; }
+  .brand-openai { background: #10a37f; color: white; }
+  .brand-anthropic { background: #d97757; color: white; }
+  .brand-qwen { background: #615CE8; color: white; }
+  .brand-deepseek { background: #4D6BFE; color: white; }
+
+  /* bars */
+  .bar-label { display: flex; justify-content: space-between; font-size: 0.75em; color: #ccd4ff; margin-top: 6px; }
+  .bar { background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; height: 12px; margin: 3px 0 4px 0; position: relative; }
+  .bar > span { display: block; height: 100%; border-radius: 4px; }
+  .bar-cyan > span { background: linear-gradient(90deg, #5ee2ff, #7bd3ff); }
+  .bar-pink > span { background: linear-gradient(90deg, #ff6ad5, #ff9ce6); }
+  .bar-gold > span { background: linear-gradient(90deg, #ffd86b, #ffb86b); }
+  .bar-green > span { background: linear-gradient(90deg, #7dffb3, #7bd3ff); }
+  .bar-orange > span { background: linear-gradient(90deg, #ffa86b, #ffd86b); }
+
+  /* quote */
+  blockquote {
+    border-left: 3px solid var(--pink);
+    background: rgba(255,106,213,0.08);
+    padding: 10px 16px;
+    margin: 14px 0;
+    border-radius: 4px;
+    font-style: italic;
+    color: #f0d9ff;
+    font-size: 0.9em;
+  }
+
+  /* section label */
+  .section-label {
+    position: absolute; top: 20px; right: 30px;
+    font-size: 0.65em; color: #6a74aa; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;
+  }
+
+  /* image */
+  .img-real { width: 100%; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+  .img-hero { width: 100%; border-radius: 10px; max-height: 40vh; object-fit: cover; }
+
+  /* pill tag */
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.65em; font-weight: 600; margin: 0 4px 0 0; }
+  .pill-up { background: rgba(125,255,179,0.15); color: var(--green); border: 1px solid rgba(125,255,179,0.4); }
+  .pill-down { background: rgba(255,106,106,0.15); color: #ff9090; border: 1px solid rgba(255,106,106,0.4); }
+  .pill-new { background: rgba(94,226,255,0.15); color: var(--cyan); border: 1px solid rgba(94,226,255,0.4); }
+  .pill-hot { background: rgba(255,216,107,0.15); color: var(--gold); border: 1px solid rgba(255,216,107,0.4); }
+
+  /* data callout */
+  .callout { background: linear-gradient(135deg, rgba(255,216,107,0.08), rgba(255,106,213,0.08)); border: 1px solid rgba(255,216,107,0.25); border-radius: 10px; padding: 12px 16px; margin: 10px 0; }
+
+  /* table */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.78em; margin-top: 10px; }
+  .data-table th { text-align: left; padding: 8px 10px; color: var(--cyan); font-weight: 700; border-bottom: 1px solid rgba(94,226,255,0.3); }
+  .data-table td { padding: 6px 10px; border-bottom: 1px dashed rgba(255,255,255,0.08); }
+  .data-table tr:hover td { background: rgba(94,226,255,0.04); }
+
+  /* tiny */
+  .tiny { font-size: 0.7em; color: #99a3cf; }
+  .tiny a { color: #9fc3ff; border: none; }
+
+  /* slide number */
+  .reveal .slide-number { background: rgba(7,10,26,0.7); color: #8a96c8; font-size: 14px; padding: 4px 10px; border-radius: 6px; font-weight: 600; letter-spacing: 1px; }
+
+  /* keyboard hint */
+  .hint { position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%); color: #3a4478; font-size: 11px; z-index: 100; pointer-events: none; }
+
+  /* accent underline */
+  .hl { background: linear-gradient(120deg, transparent 0%, rgba(255,216,107,0.2) 50%, transparent 100%); padding: 0 4px; }
+
+  /* numbered list */
+  .numbered { counter-reset: num; list-style: none; padding-left: 0; }
+  .numbered li { counter-increment: num; padding-left: 36px; position: relative; margin-bottom: 12px; }
+  .numbered li::before { content: counter(num); position: absolute; left: 0; top: 0; width: 26px; height: 26px; background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #070a1a; border-radius: 50%; text-align: center; line-height: 26px; font-weight: 800; font-size: 0.85em; }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- =================== SLIDE 1 : COVER =================== -->
+<section class="cover">
+  <div class="eyebrow">Weekly AI Report</div>
+  <h1>本周 AI<br>进展周报</h1>
+  <div class="date">2026.08.17 — 08.23</div>
+  <div class="keywords">
+    <span class="keyword">🔭 OpenAI Astra</span>
+    <span class="keyword">🧮 AI 数学难题</span>
+    <span class="keyword">🛡️ Anthropic Model 2</span>
+    <span class="keyword">🇨🇳 国产开源</span>
+    <span class="keyword">🤖 WRC 2026 机器人</span>
+    <span class="keyword">💰 商业观察</span>
+  </div>
+  <div class="meta">← → 翻页 &nbsp;|&nbsp; Space 下一页 &nbsp;|&nbsp; F 全屏 &nbsp;|&nbsp; O 总览</div>
+</section>
+
+<!-- =================== SLIDE 2 : OVERVIEW =================== -->
+<section>
+  <span class="section-label">Overview</span>
+  <h2>本周一图看懂 · 6 大主题</h2>
+  <div class="grid-3" style="margin-top: 18px;">
+    <div class="card">
+      <h4>🕵️ <span style="color: var(--cyan)">OpenAI</span></h4>
+      <p class="sub">Astra 内部模型解决 10 个十年数学难题；GPT-5.6 Sol 降价；RL 训练暂停两周。</p>
+    </div>
+    <div class="card">
+      <h4>🛡️ <span style="color: var(--orange)">Anthropic</span></h4>
+      <p class="sub">186 页风险报告曝光 Model 2（62.8%）；Claude 文字水印全球上线引发反弹。</p>
+    </div>
+    <div class="card">
+      <h4>🇨🇳 <span style="color: var(--green)">国产开源</span></h4>
+      <p class="sub">Qwen3.8-27B “源神”回归，单卡跑 Opus 级；DeepSeek V4 + Harness 首日 7 万 Star。</p>
+    </div>
+    <div class="card">
+      <h4>🤖 <span style="color: #ff9ce6">WRC 2026 · 机器人</span></h4>
+      <p class="sub">宇树已登陆科创板，王兴兴提出“物理 AI 自进化”；银河通用“星脑”端到端多模态；优必选 + 自变量实景落地。</p>
+    </div>
+    <div class="card">
+      <h4>💰 <span style="color: var(--gold)">商业观察</span></h4>
+      <p class="sub">OpenAI 年化 $130 亿 vs Anthropic Q2 $115 亿；CodeRabbit 估值 $15 亿；Cursor 被 SpaceX 收购。</p>
+    </div>
+    <div class="card">
+      <h4>📱 <span style="color: var(--purple)">Agent 生态</span></h4>
+      <p class="sub">PhoneHarness / Cherry Studio 复盘 / Rootly 废小 PR 规则 — Agent 产品范式切换。</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SLIDE 3 : OPENAI - TECH =================== -->
+<section>
+  <span class="section-label">OpenAI · Tech</span>
+  <span class="brand brand-openai">OpenAI</span>
+  <h2>GPT-5.6 Sol · 能力全景图</h2>
+  <div class="grid-32" style="margin-top: 12px;">
+    <div>
+      <div class="callout">
+        <strong>Astra 内部模型泄露</strong><br>
+        <span class="sub">Polymarket 本周发布概率飙至 <em>52%</em>；代号 <code>mewfour</code> 被悄悄从 PR 中移除；解决 <strong>10 个十年数学难题</strong>（含首个非 sofic 群构造），token 成本仅 ~$2000。</span>
+      </div>
+      <blockquote>"AI 不是证明了这个猜想，而是<strong>推翻了它</strong>。" — 菲尔兹奖得主 Gowers 收到澄清邮件后。</blockquote>
+    </div>
+    <div>
+      <h4 style="color: var(--cyan); margin-top: 0;">GPT-5.6 Sol Benchmark 实测</h4>
+      <div class="bar-label"><span>🧠 Agents' Last Exam</span><span><strong>53.6</strong></span></div>
+      <div class="bar bar-cyan"><span style="width: 85%;"></span></div>
+      <div class="bar-label"><span>💻 AA Coding Agent Index</span><span><strong>80</strong></span></div>
+      <div class="bar bar-green"><span style="width: 80%;"></span></div>
+      <div class="bar-label"><span>🖥️ Terminal-Bench 2.1</span><span><strong>88.8%</strong></span></div>
+      <div class="bar bar-green"><span style="width: 89%;"></span></div>
+      <div class="bar-label"><span>🌐 BrowseComp</span><span><strong>92.2%</strong></span></div>
+      <div class="bar bar-cyan"><span style="width: 92%;"></span></div>
+      <div class="bar-label"><span>🔐 ExploitBench</span><span><strong>73.5%</strong></span></div>
+      <div class="bar bar-orange"><span style="width: 74%;"></span></div>
+      <div class="bar-label"><span>🧬 GeneBench Pro</span><span><strong>28.7%</strong></span></div>
+      <div class="bar bar-pink"><span style="width: 29%;"></span></div>
+      <div class="bar-label"><span>🐞 DeepSWE v1.1</span><span><strong>72.7%</strong></span></div>
+      <div class="bar bar-green"><span style="width: 73%;"></span></div>
+      <div class="bar-label"><span>📱 OSWorld 2.0</span><span><strong>62.6%</strong></span></div>
+      <div class="bar bar-cyan"><span style="width: 63%;"></span></div>
+    </div>
+  </div>
+  <p class="tiny">📎 <a href="https://openai.com/index/ten-advances-in-mathematics/" target="_blank">10 大数学进展</a> · <a href="https://openai.com/zh-Hans-CN/index/gpt-5-6/" target="_blank">GPT-5.6 Blog</a> · <a href="https://mp.weixin.qq.com/s/MZU81gsYD_CmzqRNt-tw5A" target="_blank">公众号 · Astra</a> · <a href="https://mp.weixin.qq.com/s/_52_teOO20nOEXg-l22XLA" target="_blank">公众号 · 菲尔兹奖点评</a></p>
+</section>
+
+<!-- =================== SLIDE 4 : OPENAI - BUSINESS =================== -->
+<section>
+  <span class="section-label">OpenAI · Business</span>
+  <span class="brand brand-openai">OpenAI</span>
+  <h2>商业 · 降价 · 暂停 RL · Codex 开源</h2>
+  <div class="grid-2" style="margin-top: 12px;">
+    <div>
+      <div class="card">
+        <h4>🚨 RL 训练暂停两周</h4>
+        <p class="sub">最新模型的强化学习训练被暂停，加固研究环境、红队测试、扩大内部监控。Sam Altman："如果模型超出安全要求，我们将立即行动。"</p>
+      </div>
+      <div class="card" style="margin-top: 10px;">
+        <h4>💰 GPT-5.6 Sol 价格战</h4>
+        <p class="sub">
+          缓存输入 <em>$0.5 → $0.4</em> · 缓存写入 <em>$6.25 → $5</em><br>
+          长上下文输入 <em>$10 → $8</em> · 输出 <em>$45 → $30</em><br>
+          <strong>Luna 砍 80%</strong> / <strong>Terra 降 20%</strong> / Sol 原价但加 Fast mode
+        </p>
+      </div>
+      <div class="card" style="margin-top: 10px;">
+        <h4>🔐 Codex 开放 1M 上下文</h4>
+        <p class="sub"><code>model_context_window = 1000000</code>，到 90 万 token 才开始自动压缩。</p>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h4>🔢 Token 从来不等价（暗器）</h4>
+        <p class="sub">同一段文字：<strong>GPT-5.6 Sol 切 766 tokens</strong>，<em>Claude Opus 5 切 1170 tokens</em>。同样 $5/百万 token，OpenAI 账单<strong>少 34.5%</strong>。</p>
+      </div>
+      <div class="card" style="margin-top: 10px;">
+        <h4>🔧 Codex Harness 全面开源</h4>
+        <p class="sub">Greg Brockman：“Codex 能驱动的远不止编程工具！” —— 把 Agent 直接带入围绕实际工作设计的软件里。</p>
+      </div>
+      <div class="card" style="margin-top: 10px;">
+        <h4>📊 商业增长反攻</h4>
+        <p class="sub">
+          营收环比 <span class="pill pill-up">+35%</span> · 企业收入 <span class="pill pill-up">+50%</span><br>
+          AI 编程办公周活 <strong>2000 万</strong>；Codex 增速 20.8% vs Claude Code 增速 5.2%
+        </p>
+      </div>
+    </div>
+  </div>
+  <p class="tiny">📎 <a href="https://mp.weixin.qq.com/s/8Ew0y9ViEthtd2z4so0btA" target="_blank">降价</a> · <a href="https://mp.weixin.qq.com/s/5hsHa3FfBO5Rp7A8uUScEg" target="_blank">RL 暂停</a> · <a href="https://mp.weixin.qq.com/s/azaRr3P-itANlFYBnNk6Ig" target="_blank">Token 不等价</a> · <a href="https://mp.weixin.qq.com/s/fbKi7IrAvmv49IfJbI9w7Q" target="_blank">Codex Harness</a> · <a href="https://mp.weixin.qq.com/s/rcZoiUU66V66V8iEurCRtg" target="_blank">1M 上下文</a></p>
+</section>
+
+<!-- =================== SLIDE 5 : OPENAI - MATH =================== -->
+<section>
+  <span class="section-label">AI for Math</span>
+  <span class="brand brand-openai">OpenAI</span>
+  <h2>🧮 AI 数学研究 · 十年难题被批量攻破</h2>
+  <div class="grid-32" style="margin-top: 10px;">
+    <div>
+      <div class="callout">
+        <strong>Astra · 10 Advances in Mathematics</strong><br>
+        <span class="sub">内部模型用约 <em>$2,000</em> API token 成本，数周内生成了 <strong>10 个</strong>长期悬而未决的数学 / 理论计算机科学问题的完整证明或反例。</span>
+      </div>
+      <blockquote style="font-size: 0.82em; margin: 8px 0;">"AI 不是证明了这个猜想，而是<strong>推翻了它</strong>。" — 菲尔兹奖得主 Gowers 收到澄清邮件后</blockquote>
+      <h4 style="color: var(--cyan); margin: 6px 0 4px;">三个标志性突破</h4>
+      <ul style="font-size: 0.8em; line-height: 1.4;">
+        <li><strong>非 sofic 群构造</strong>：群论"圣杯"，追了几十年的首个显式实例。</li>
+        <li><strong>Connes 刚性猜想</strong>：给出反例，算子代数领域震动。</li>
+        <li><strong>Erdős 三大问题</strong>：#146 / #180 / #183 同时解决。</li>
+      </ul>
+      <h4 style="color: var(--cyan); margin: 8px 0 4px;">不只是 OpenAI</h4>
+      <p style="font-size: 0.8em; margin: 0;">Anthropic <strong>Fable 5</strong> 一夜证伪 87 年 <em>雅可比猜想</em>（张益唐曾苦熬 7 年）；陶哲轩 ICM 2026 演讲《AI 时代的数学》：数学正从"证明稀缺"进入<em>"证明过剩"</em>的动荡期。</p>
+    </div>
+    <div>
+      <h4 style="color: var(--cyan); margin: 0 0 6px;">十大难题 · 一图速览</h4>
+      <div class="grid-2" style="gap: 8px;">
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">🔵 高维球体堆积</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">确立新密度上限</p></div>
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">📡 二元 / 球面编码</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">指数级界限优化</p></div>
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">👥 非 sofic 群</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">首个显式构造</p></div>
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">🎯 Connes 刚性</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">反例证伪猜想</p></div>
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">⚡ 算术电路复杂性</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">permanent 新下界</p></div>
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">🌀 量子并行重复</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">双人量子博弈指数定理</p></div>
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">📐 最近向量问题</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">多项式因子近似硬度</p></div>
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">📦 Ehrhart 体积</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">凸体最大体积确定</p></div>
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">🌈 多色拉姆齐数</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">Erdős #183 超指数下界</p></div>
+        <div class="card" style="padding: 8px 10px;"><h4 style="margin:0; font-size:0.78em;">📊 极值数猜想</h4><p class="sub" style="font-size:0.68em; margin:2px 0 0;">Erdős #146 / #180 解决</p></div>
+      </div>
+    </div>
+  </div>
+  <p class="tiny">📎 <a href="https://openai.com/index/ten-advances-in-mathematics/" target="_blank">OpenAI 10 大数学进展</a> · <a href="https://mp.weixin.qq.com/s/MZU81gsYD_CmzqRNt-tw5A" target="_blank">公众号 · Astra</a> · <a href="https://mp.weixin.qq.com/s/_52_teOO20nOEXg-l22XLA" target="_blank">菲尔兹奖点评</a> · <a href="https://mp.weixin.qq.com/s/otaF_WHeg7YkSYFi_rCgFw" target="_blank">Fable 5 雅可比猜想</a> · <a href="https://mp.weixin.qq.com/s/eVjPiWiw4iuB9NSiQoROFw" target="_blank">陶哲轩菲尔兹现场</a></p>
+</section>
+
+<!-- =================== SLIDE 5 : ANTHROPIC - TECH =================== -->
+<section>
+  <span class="section-label">Anthropic · Tech</span>
+  <span class="brand brand-anthropic">Anthropic</span>
+  <h2>Model 2 · 186 页风险报告精读</h2>
+  <div class="grid-32" style="margin-top: 12px;">
+    <div>
+      <p style="font-size: 0.9em;">Anthropic 发布第二份风险报告（186 页 PDF），曝光内部未发布模型 <strong>Model 2</strong>，明确表态 <em>“没有对外发布它的计划”</em> —— 前沿能力的真正边界，正走向“内部先用、不发布”的新常态。</p>
+      <div class="callout">
+        <strong>替代能力阈值</strong><br>
+        <span class="sub">Anthropic 估计：一个真正能全面替代技术人员的系统至少需达 <strong>85%</strong>。Model 2 还差一截，但已甩开上代 12 个百分点。</span>
+      </div>
+      <p style="font-size: 0.85em;"><strong>研究员自评</strong>：18 人平均生产率提升 <em>4 倍</em>；但仅 <strong>1 人</strong>认为模型已能替代初级研究科学家。</p>
+    </div>
+    <div>
+      <h4 style="color: var(--orange); margin-top: 0;">内部模型能力阶梯</h4>
+      <div class="bar-label"><span>Mythos 5（上上代发布）</span><span><strong>50.3%</strong></span></div>
+      <div class="bar bar-orange"><span style="width: 50.3%;"></span></div>
+      <div class="bar-label"><span>Mythos Preview（上代内部）</span><span><strong>54.8%</strong></span></div>
+      <div class="bar bar-orange"><span style="width: 54.8%;"></span></div>
+      <div class="bar-label"><span>Model 2（本代内部）</span><span><strong>62.8%</strong></span></div>
+      <div class="bar bar-cyan"><span style="width: 62.8%;"></span></div>
+      <div class="bar-label"><span>“替代研究员”门槛</span><span style="color: var(--pink);"><strong>85%</strong></span></div>
+      <div class="bar bar-pink"><span style="width: 85%;"></span></div>
+
+      <h4 style="color: var(--orange); margin-top: 14px;">其他关键动作</h4>
+      <ul style="font-size: 0.82em;">
+        <li><strong>AlphaFold 解散</strong> → Claude 进军蛋白质设计：<em>15 个靶点拿下 14 个</em>，命中率 35.1%</li>
+        <li><strong>Fable 5</strong> 夺冠全球 18 大 AI 自主科研赛，追平人类 <em>82%</em></li>
+        <li>挖角“<strong>TPU 之父</strong>” Amir Salek 主导自研芯片，2026 算力支出 $190 亿</li>
+      </ul>
+    </div>
+  </div>
+  <p class="tiny">📎 <a href="https://www-cdn.anthropic.com/f61d49fa5596956a5dec75fea0e973bf6a6a8378/Redacted%20Risk%20Report%20August%202026%20.pdf" target="_blank">Risk Report PDF</a> · <a href="https://mp.weixin.qq.com/s/MBSWVBeW92IqwhD2dK_cDA" target="_blank">公众号精读</a> · <a href="https://mp.weixin.qq.com/s/D1aGX_C_PZ6H1xJwdKzFEQ" target="_blank">蛋白质设计</a> · <a href="https://mp.weixin.qq.com/s/uvBaAb2YTHZq2XULKpM7Zg" target="_blank">Fable 5 夺冠</a></p>
+</section>
+
+<!-- =================== SLIDE 6 : ANTHROPIC - INCIDENTS =================== -->
+<section>
+  <span class="section-label">Anthropic · Incidents</span>
+  <span class="brand brand-anthropic">Anthropic</span>
+  <h2>水印 · 宕机 · 红队 · 破防小作文</h2>
+  <div class="grid-2" style="margin-top: 12px;">
+    <div>
+      <div class="card">
+        <h4>💧 Claude 文字水印全球上线</h4>
+        <p class="sub">
+          采用 Google DeepMind <strong>SynthID-Text</strong>（2024 Nature 论文版本）。<br>
+          机制：候选词被分成 <em>“绿名单”+“红名单”</em>，密钥 + 前文 n-gram 决定选词；整篇 &gt;50% 绿名单词即判定为 AI 生成。<br>
+          <strong>OpenAI 内部调查</strong>：30% 用户威胁转投对手，所以没发；<em>xAI 根本没签</em>欧盟 AI 法案。
+        </p>
+      </div>
+      <div class="card" style="margin-top: 10px;">
+        <h4>📣 用户反弹</h4>
+        <p class="sub">翻译 / 润色 / 改错别字都会被带上水印 —— <em>"因用铅笔写字而要求把铅笔列为作者"</em>。</p>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h4>⚠️ Claude Code 首次被红队攻破</h4>
+        <p class="sub">
+          Cursor / Copilot / Windsurf / Cline / Trae <strong>六款工具首次系统性红队</strong>：一条假工具 + <code>curl | bash</code> 即可 RCE。<br>
+          攻击链：偷走系统提示词 → 定制恶意负载 → 劫持工具调用 → 远程代码执行。
+        </p>
+      </div>
+      <div class="card" style="margin-top: 10px;">
+        <h4>💥 Fable 5.1 泄露 + 全球大宕机</h4>
+        <p class="sub">宕机前一天：Anthropic 年化收入飙至 <strong>$650 亿</strong>（7x YoY），超越 OpenAI 的 $400 亿，年底剑指千亿。</p>
+      </div>
+      <div class="card" style="margin-top: 10px;">
+        <h4>✍️ Dario “破防小作文” 千万围观</h4>
+        <p class="sub">把话题转向“为什么越来越多人不信 AI？” —— 答案是<em>权力集中</em>。LeCun 当场开炮。</p>
+      </div>
+    </div>
+  </div>
+  <p class="tiny">📎 <a href="https://mp.weixin.qq.com/s/eTuce8-2oDcUHTVA_764oA" target="_blank">水印精读</a> · <a href="https://mp.weixin.qq.com/s/CmYyo_BVriRVLRD895Ou8w" target="_blank">红队报告</a> · <a href="https://mp.weixin.qq.com/s/YEABLGx5DU7wvPwLgksU4A" target="_blank">宕机 + Fable 5.1</a> · <a href="https://mp.weixin.qq.com/s/kFufGBA2T0x59Ljmh2YDuA" target="_blank">Dario 小作文</a></p>
+</section>
+
+<!-- =================== SLIDE 7 : 国产开源 =================== -->
+<section>
+  <span class="section-label">国产开源</span>
+  <h2>🇨🇳 国产开源 · “源神” + DeepSeek 双响</h2>
+  <div class="grid-2" style="margin-top: 14px;">
+    <div>
+      <span class="brand brand-qwen">Qwen</span>
+      <h3 style="margin-top: 6px;">Qwen3.8-27B · 一张显卡跑 Opus</h3>
+      <p style="font-size: 0.85em;">64 层（48 层 Gated DeltaNet 线性注意力 + 16 层完整 Attention），原生多模态 + <strong>262K 原生上下文</strong>（扩展到 1M）。默认开启 <code>preserve_thinking</code>。</p>
+      <h4 style="color: var(--purple);">vs Opus 4.6 Max</h4>
+      <div class="bar-label"><span>SWE-bench Pro</span><span><span class="pill pill-up">+8.3</span></span></div>
+      <div class="bar bar-cyan"><span style="width: 83%;"></span></div>
+      <div class="bar-label"><span>QwenSWEBench</span><span><span class="pill pill-up">+15.2</span></span></div>
+      <div class="bar bar-green"><span style="width: 95%;"></span></div>
+      <div class="bar-label"><span>OSWorld-Verified</span><span><span class="pill pill-up">84.3 vs 72.7</span></span></div>
+      <div class="bar bar-cyan"><span style="width: 84%;"></span></div>
+      <div class="bar-label"><span>AndroidWorld</span><span><span class="pill pill-up">81.9 vs 62.0</span></span></div>
+      <div class="bar bar-green"><span style="width: 82%;"></span></div>
+      <p style="font-size: 0.82em; margin-top: 8px;"><strong>Qwen-UI-Agent</strong>：100+ 真机、150+ App、400+ 任务基准；6 大 GUI 基准 5 个第一，27B 主力版超越 GPT-5.6 Sol / Claude Opus 4.8。</p>
+    </div>
+    <div>
+      <span class="brand brand-deepseek">DeepSeek</span>
+      <h3 style="margin-top: 6px;">V4 满血 + Harness 双发</h3>
+      <p style="font-size: 0.85em;"><strong>V4-Pro-0813 + J-Space</strong> 9 项 benchmark 7 项领先 GLM-5.3 / Kimi-K3 / Opus-4.8。<strong>DeepSeek Harness</strong> 上线首日 GitHub <span class="pill pill-hot">7 万 Star</span>。</p>
+      <div class="callout">
+        <strong>核心机制 · Cordis Plugin</strong><br>
+        <span class="sub">统一 hooks / MCP / subagents / 核心 loop → 类比 <em>Unix 的热重载 OS</em>。支持<em> Creator 模式</em>让 coding agent 自创 preset，收集自进化数据。</span>
+      </div>
+      <h4 style="color: var(--purple);">思维链二极管（黑盒观察）</h4>
+      <p style="font-size: 0.82em;">同一会话连续 CoT 稳定落入两种形态：<strong>短思维直觉</strong>（快速判断开干）vs <strong>长思维推理</strong>（展开规划再决策）。</p>
+      <blockquote>"Anthropic 在做最好的 agent 产品；DeepSeek 在押注<em>下一个范式</em>。"</blockquote>
+    </div>
+  </div>
+  <p class="tiny">📎 <a href="https://mp.weixin.qq.com/s/cBzI_VP4wGHBE3BVNJ7kGw" target="_blank">Qwen3.8-27B 源神</a> · <a href="https://mp.weixin.qq.com/s/xjKcjN2W82eNcb0lSrP6yQ" target="_blank">Qwen-UI-Agent</a> · <a href="https://github.com/Tongyi-MAI/MAI-UI" target="_blank">GitHub · MAI-UI</a> · <a href="https://mp.weixin.qq.com/s/IwXeL6BSJg76M5aNNG5YLQ" target="_blank">V4 J-Space</a> · <a href="https://mp.weixin.qq.com/s/g6wTg7SVXbHrjdX4aEJQxg" target="_blank">Harness 精读</a> · <a href="https://github.com/Tiger3807861189/DeepSeek-V4-J-Space-Capability-Realization-Report" target="_blank">J-Space 报告</a></p>
+</section>
+
+<!-- =================== SLIDE 8 : ROBOT / WRC 2026 =================== -->
+<section>
+  <span class="section-label">WRC 2026 · Robot</span>
+  <h2>🤖 WRC 2026 · 机器人真正爆发要等两个 <em>80% 时刻</em></h2>
+
+  <div class="grid-32" style="margin-top: 8px;">
+    <div style="display:flex; gap:14px; align-items:start;">
+      <img class="img-real" src="assets/unitree-g1.jpg" alt="Unitree G1" style="width: 38%; max-height: 150px; object-fit: cover; flex-shrink:0;">
+      <div class="callout" style="margin:0; padding:10px 14px;">
+        <strong>两个 80% 时刻</strong><br>
+        <span class="sub">在 <em>80% 的陌生场景</em>中，通过语音或文字指令，机器人能顺利完成约 <em>80% 任务</em>。 — 王兴兴上市后首次公开演讲 @ WRC 2026</span>
+      </div>
+    </div>
+    <div>
+      <h4 style="color: #ff9ce6; margin: 0 0 4px 0;">物理 AI 自进化四支点</h4>
+      <div class="bar-label"><span>① 更强的基础模型</span><span>🧠</span></div>
+      <div class="bar bar-pink"><span style="width: 92%;"></span></div>
+      <div class="bar-label"><span>② 更多元的规模数据</span><span>📊</span></div>
+      <div class="bar bar-cyan"><span style="width: 85%;"></span></div>
+      <div class="bar-label"><span>③ 更多的真机反馈</span><span>🤖</span></div>
+      <div class="bar bar-green"><span style="width: 78%;"></span></div>
+      <div class="bar-label"><span>④ 更多的技能积累</span><span>🎯</span></div>
+      <div class="bar bar-gold"><span style="width: 72%;"></span></div>
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-top: 8px;">
+    <div class="card" style="padding: 10px 12px;">
+      <h4 style="margin: 0 0 4px 0;">🚀 <span style="color: var(--cyan)">宇树科技</span> <span class="pill pill-hot">已上市</span></h4>
+      <p class="sub">8/19 登陆科创板成“第一股”；王兴兴《从展品到产品》演讲。技术跃迁：<em>多模态端到端</em>、语音实时生成动作。</p>
+    </div>
+    <div class="card" style="padding: 10px 12px;">
+      <h4 style="margin: 0 0 4px 0;">⭐ <span style="color: var(--green)">银河通用 · 星脑</span></h4>
+      <p class="sub">8/22 第二届世界人形机器人运动会开幕，央视全球直播。<strong>银河星脑</strong>把大脑+小脑+神经控制集成在同一模型。</p>
+    </div>
+    <div class="card" style="padding: 10px 12px;">
+      <h4 style="margin: 0 0 4px 0;">🏭 <span style="color: var(--gold)">实景落地</span></h4>
+      <p class="sub"><strong>优必选</strong>：WRC 真机实景演示。<strong>自变量</strong>：已能<em>铲猫砂</em>——从“秀未来”切换到“已解决”。</p>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top: 8px; align-items: start;">
+    <div>
+      <div style="position: relative; height: 220px; overflow: hidden; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <iframe src="https://player.bilibili.com/player.html?bvid=BV1wVwTzyEp3&page=1&high_quality=1&autoplay=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+      </div>
+      <p class="tiny" style="margin-top: 4px;">▲ 银河通用 Galbot · 全球首个全自主人形机器人复杂网球对抗（来源：B站 @银河通用机器人）</p>
+    </div>
+    <div>
+      <blockquote style="margin: 0 0 6px 0; padding: 8px 12px; font-size: 0.82em;">“具身智能需要的不是把语言模型‘搬’到物理世界，而是一个<em>平行于数字世界基础模型</em>的、专门服务于物理世界的基础模型。” — 自变量 CEO 王潜</blockquote>
+      <p style="font-size: 0.76em; margin: 0;"><strong>第一梯队</strong>：智元 / 宇树 / 银河通用，估值 <em>百亿左右</em>；宇树登陆科创板后市值进入 <em>千亿级</em>。</p>
+    </div>
+  </div>
+
+  <p class="tiny">📎 <a href="https://mp.weixin.qq.com/s/9cyX2eAhwY8R0n977KQCBg" target="_blank">两个 80% 时刻</a> · <a href="https://mp.weixin.qq.com/s/8YbJmUzVFnaBHxEzpGLNEg" target="_blank">端到端多模态</a> · <a href="https://mp.weixin.qq.com/s/PI9zAINxFH5XKgv1Ret7xw" target="_blank">银河通用星脑</a> · <a href="https://mp.weixin.qq.com/s/9MCVMfD1ft6k1IhH6zEpVQ" target="_blank">优必选 WRC</a> · <a href="https://mp.weixin.qq.com/s/0ZxwW_uqgKA7zHJtEBLC0w" target="_blank">自变量铲猫砂</a> · <a href="https://mp.weixin.qq.com/s/jGigkHCZQUtuhj1_0MyyQw" target="_blank">王潜演讲</a></p>
+</section>
+
+<!-- =================== SLIDE 10 : 商业观察 =================== -->
+<section>
+  <span class="section-label">商业观察</span>
+  <h2>💰 商业观察 · 钱正在流向哪里</h2>
+
+  <div class="grid-2" style="margin-top: 10px;">
+    <div>
+      <h4 style="color: var(--gold); margin: 0 0 4px;">🏆 两大巨头营收对决</h4>
+      <table class="data-table">
+        <tr><th>指标</th><th>OpenAI</th><th>Anthropic</th></tr>
+        <tr><td>年化收入</td><td><strong>$130 亿</strong></td><td style="color: var(--gold);"><strong>$650 亿</strong> 🔥</td></tr>
+        <tr><td>Q2 营收</td><td>—</td><td><strong>$115 亿</strong> <span class="pill pill-up">14x YoY</span></td></tr>
+        <tr><td>环比增速</td><td><span class="pill pill-up">+35%</span></td><td><span class="pill pill-up">+100%</span> QoQ</td></tr>
+        <tr><td>编程产品周活</td><td><strong>2000 万</strong></td><td>—</td></tr>
+        <tr><td>编程增速</td><td>Codex +20.8%</td><td>Claude Code +5.2%</td></tr>
+        <tr><td>2028 预期</td><td>—</td><td><em>$1900-2000 亿</em></td></tr>
+      </table>
+      <p style="font-size: 0.74em; color: #bcc4ec; margin-top: 4px;">Anthropic 总量领先，但 OpenAI 追赶肉眼可见；Codex 仍两位数，Claude Code 滑落。</p>
+    </div>
+
+    <div>
+      <h4 style="color: var(--gold); margin: 0 0 4px;">🦄 本周融资 / 收购</h4>
+      <div class="card" style="padding: 10px 14px;">
+        <h4>CodeRabbit <span class="pill pill-hot">估值 $15 亿</span></h4>
+        <p class="sub">融资 $2.31 亿 / 6 轮；营收 5x YoY；每周审查 200 万+；17000+ 企业客户。</p>
+      </div>
+      <div class="card" style="margin-top: 8px; padding: 10px 14px;">
+        <h4>Cursor 被 SpaceX 收购 <span class="pill pill-new">$600 亿</span></h4>
+        <p class="sub">8/14 完成，并入 SpaceX AI 团队。马斯克：<em>"9 月前 AI 收入将超 SpaceX 所有其他业务"</em>。</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 10px;">
+    <h4 style="color: var(--gold); margin: 0 0 4px;">📉 关键信号</h4>
+    <div class="grid-2">
+      <ul style="font-size: 0.78em; line-height: 1.35;">
+        <li><strong>阿里 Q2</strong>：收入 2689 亿(+9%)，经营利润 <span class="pill pill-down">-57%</span>；阿里云外部收入 <span class="pill pill-up">+45%</span>。</li>
+        <li><strong>"Claude 大面积退订"</strong>帖引百万围观；Cursor 趁势挖人。</li>
+      </ul>
+      <ul style="font-size: 0.78em; line-height: 1.35;">
+        <li><strong>Anthropic 算力</strong> 2026 年 $190 亿；推理成本超预算 23%，毛利率 40% 距 IPO 目标 77% → 必须自研芯片。</li>
+        <li><strong>Rootly 废小 PR 规则</strong>：Agent 以"特性"为单位，衡量从"代码行数"转向<em>"爆炸半径"</em>。</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="tiny">📎 <a href="https://mp.weixin.qq.com/s/HxL3E8E7DmHAqk3mnj2dhQ" target="_blank">OpenAI 营收</a> · <a href="https://mp.weixin.qq.com/s/jMEdDdAvWXzB18MFW_taHg" target="_blank">Anthropic Q2</a> · <a href="https://mp.weixin.qq.com/s/UvK_V-tT2_LnWayr09ocWw" target="_blank">CodeRabbit 估值</a> · <a href="https://mp.weixin.qq.com/s/8E-KiX7tLnHS62IrNGjQqQ" target="_blank">阿里财报</a> · <a href="https://mp.weixin.qq.com/s/wsrd_HAoZ1pyxboK_TNkbQ" target="_blank">Rootly 小 PR</a></p>
+</section>
+
+<!-- =================== SLIDE 11 : TAKEAWAYS =================== -->
+<section>
+  <span class="section-label">Takeaways</span>
+  <h2>🎯 本周 5 大观察</h2>
+  <ol class="numbered" style="margin-top: 20px; font-size: 0.95em;">
+    <li><strong>模型能力的“真边界”藏在内部报告里</strong><br>
+      <span class="tiny">Anthropic Model 2 / OpenAI Astra —— 前沿能力不再发布给消费者，“风险报告 + 红队测试”成为新常态。</span></li>
+    <li><strong>Agent Harness 是下一个战场</strong><br>
+      <span class="tiny">DeepSeek Harness / OpenAI Codex Harness / Anthropic Claude Code / Cursor Origin —— 产品竞争从“模型”转向“执行系统”。</span></li>
+    <li><strong>小激活 + 大验证 = 新范式</strong><br>
+      <span class="tiny">Qwen3.8-27B 单卡跑 Opus 级 —— MoE + 可验证 RL 是性价比杀手。</span></li>
+    <li><strong>AI 安全从口号走向“工程红线”</strong><br>
+      <span class="tiny">OpenAI 暂停 RL / Claude 水印反弹 / Claude Code 被红队 RCE —— 安全不再是 PR，而是<em>工程基础设施</em>。</span></li>
+    <li><strong>智能体从“数字”走向“物理世界”</strong><br>
+      <span class="tiny">Fable 5 自主科研 / DeepSeek Creator 模式 / 机器人“银河星脑”端到端 —— <em>自进化元年</em>从屏幕延伸到现实世界。</span></li>
+  </ol>
+  <p style="text-align: center; color: var(--cyan); font-size: 1.2em; margin-top: 24px;">下周见 · Keep Watching the Frontier</p>
+</section>
+
+</div>
+</div>
+
+<div class="hint">← → 翻页 · Space 下一页 · F 全屏 · O 总览 · S 演讲者视图</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js" crossorigin="anonymous"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    width: 1600,
+    height: 900,
+    margin: 0.05,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade'
+  });
+</script>
+</body>
+</html>
